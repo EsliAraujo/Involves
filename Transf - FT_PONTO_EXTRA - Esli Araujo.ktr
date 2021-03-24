@@ -463,14 +463,14 @@ E este ser utilizado como chave / agrupador</note>
     </notepad>
   </notepads>
   <connection>
-    <name>SMLUI_DBAPS</name>
-    <server>192.168.0.100</server>
-    <type>ORACLE</type>
+    <name>MySQL</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
     <access>Native</access>
-    <database>smlui</database>
-    <port>1521</port>
-    <username>dbaps</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79ce74dc93a2cc</password>
+    <database>INVOLVES</database>
+    <port>3306</port>
+    <username>admin</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce71da9fa6d4</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -489,7 +489,7 @@ E este ser utilizado como chave / agrupador</note>
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
-        <attribute>1521</attribute>
+        <attribute>3306</attribute>
       </attribute>
       <attribute>
         <code>PRESERVE_RESERVED_WORD_CASE</code>
@@ -500,13 +500,8 @@ E este ser utilizado como chave / agrupador</note>
         <attribute>N</attribute>
       </attribute>
       <attribute>
-        <code>SQL_CONNECT</code>
-        <attribute>CALL dbaps.desativaLog();
-CALL  dbamv.pkg_mv2000.atribui_empresa(1)</attribute>
-      </attribute>
-      <attribute>
-        <code>STRICT_NUMBER_38_INTERPRETATION</code>
-        <attribute>N</attribute>
+        <code>STREAM_RESULTS</code>
+        <attribute>Y</attribute>
       </attribute>
       <attribute>
         <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
@@ -915,52 +910,6 @@ CALL  dbamv.pkg_mv2000.atribui_empresa(1)</attribute>
     </GUI>
   </step>
   <step>
-    <name>Group by - QTD_PONTO_EXTRA</name>
-    <type>GroupBy</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <all_rows>Y</all_rows>
-    <ignore_aggregate>N</ignore_aggregate>
-    <field_ignore/>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>grp</prefix>
-    <add_linenr>N</add_linenr>
-    <linenr_fieldname/>
-    <give_back_row>Y</give_back_row>
-    <group>
-      <field>
-        <name>ID_LINHA_PRODUTO</name>
-      </field>
-    </group>
-    <fields>
-      <field>
-        <aggregate>QTD_PONTO_EXTRA</aggregate>
-        <subject>VALOR</subject>
-        <type>SUM</type>
-        <valuefield/>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>416</xloc>
-      <yloc>304</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>Group by - QTD_DISP AGG</name>
     <type>GroupBy</type>
     <description/>
@@ -1007,6 +956,52 @@ CALL  dbamv.pkg_mv2000.atribui_empresa(1)</attribute>
     </GUI>
   </step>
   <step>
+    <name>Group by - QTD_PONTO_EXTRA</name>
+    <type>GroupBy</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <all_rows>Y</all_rows>
+    <ignore_aggregate>N</ignore_aggregate>
+    <field_ignore/>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>grp</prefix>
+    <add_linenr>N</add_linenr>
+    <linenr_fieldname/>
+    <give_back_row>Y</give_back_row>
+    <group>
+      <field>
+        <name>ID_LINHA_PRODUTO</name>
+      </field>
+    </group>
+    <fields>
+      <field>
+        <aggregate>QTD_PONTO_EXTRA</aggregate>
+        <subject>VALOR</subject>
+        <type>SUM</type>
+        <valuefield/>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>416</xloc>
+      <yloc>304</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Insert / update - FT_PONTO_EXTRA</name>
     <type>InsertUpdate</type>
     <description/>
@@ -1017,7 +1012,7 @@ CALL  dbamv.pkg_mv2000.atribui_empresa(1)</attribute>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>SMLUI_DBAPS</connection>
+    <connection>MySQL</connection>
     <commit>100</commit>
     <update_bypassed>N</update_bypassed>
     <lookup>
@@ -1087,7 +1082,7 @@ CALL  dbamv.pkg_mv2000.atribui_empresa(1)</attribute>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>SMLUI_DBAPS</connection>
+    <connection>MySQL</connection>
     <commit>100</commit>
     <update_bypassed>N</update_bypassed>
     <lookup>
@@ -1186,23 +1181,18 @@ CALL  dbamv.pkg_mv2000.atribui_empresa(1)</attribute>
     <fields>
       <field>
         <name>ID_PONTO_VENDA</name>
-        <rename/>
       </field>
       <field>
         <name>DATA</name>
-        <rename/>
       </field>
       <field>
         <name>ID_LINHA_PRODUTO</name>
-        <rename/>
       </field>
       <field>
         <name>TIPO_COLETA</name>
-        <rename/>
       </field>
       <field>
         <name>VALOR</name>
-        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
       <meta>
@@ -1251,19 +1241,15 @@ CALL  dbamv.pkg_mv2000.atribui_empresa(1)</attribute>
     <fields>
       <field>
         <name>ID_PONTO_VENDA</name>
-        <rename/>
       </field>
       <field>
         <name>DATA</name>
-        <rename/>
       </field>
       <field>
         <name>ID_LINHA_PRODUTO</name>
-        <rename/>
       </field>
       <field>
         <name>QTD_PONTO_EXTRA</name>
-        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1295,15 +1281,12 @@ CALL  dbamv.pkg_mv2000.atribui_empresa(1)</attribute>
     <fields>
       <field>
         <name>ID_PONTO_VENDA</name>
-        <rename/>
       </field>
       <field>
         <name>DATA</name>
-        <rename/>
       </field>
       <field>
         <name>QTD_PONTO_EXTRA_AGG_MES</name>
-        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
